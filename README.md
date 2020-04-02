@@ -5,7 +5,7 @@ A seguir, apresento funções para a consulta da API do Tá de Pé e para armaze
 
 ## Obtendo autorização
 
-A API do TDP exige um token de autorização. Você obtem esse token na documentação da API do TDP. Na documentação vá em Autorização >> Obter token e clique em Auths. Veja se o menu esquerdo está como Console e vá em Call Resource. Desça a tela até Response Body e pegue o código que aparece depois de token, que será algo como "Bearer yy...". Copie esse token, ele será necessário para executar os comandos no R.
+A API do TDP exige um token de autorização. Você obtem esse token na documentação da API do TDP. Na documentação vá em Autorização >> Obter token e clique em Auths. Veja se o menu esquerdo está como Console e vá em Call Resource. Desça a tela até Response Body e pegue o código que aparece depois de token, que será algo como "Bearer yy...". Copie esse token, ele será necessário para executar os comandos.
 
 ## Setando URL
 

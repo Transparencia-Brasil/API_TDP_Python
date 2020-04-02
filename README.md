@@ -61,6 +61,7 @@ def fetch_api(url, token, pg = 1):
     
     return a
 ```
+O parâmetro "pg" refere-se a página que a função iniciará o armazenamento. 
 
 Exemplo de uso:
 
@@ -68,7 +69,11 @@ Exemplo de uso:
 ```python
 token = 'token obtido'
 
+#Exemplo 1:
 lista_result = fetch_api(url = obter_alertas, token = token)
+
+#Exemplo 2:
+lista_result = fetch_api(url = obter_alertas, token = token, pg=30)
 ```
 
 ## Transformando a lista resultante em um dataframe:

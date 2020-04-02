@@ -9,9 +9,7 @@ A API do TDP exige um token de autorização. Você obtem esse token na document
 
 ## Setando URL
 
-A Url vai estimar o tipo de consultas que queremos ter. Para mais informações sobre o que é cada uma das consultas, acesse a documentação da API em https://tadepe.docs.apiary.io/ .
-
-A URL é o tipo de consulta que queremos fazer:
+A URL é o tipo de consulta que queremos fazer. Para mais informações sobre o que é cada uma das consultas, acesse a documentação da API em https://tadepe.docs.apiary.io/ .
 
 
 ```python

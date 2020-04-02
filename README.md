@@ -1,2 +1,95 @@
-# API_TDP_Python
-Consultas automatizadas na API do Projeto Tá de Pé em Python
+
+# Funções para consultas automáticas da API do Prjeto Tá de Pé em Python
+
+A seguir, apresento funções para a consulta da API do Tá de Pé e para armazenar os dados em um dataframe.
+
+## Obtendo autorização
+
+A API do TDP exige um token de autorização. Você obtem esse token na documentação da API do TDP. Na documentação vá em Autorização >> Obter token e clique em Auths. Veja se o menu esquerdo está como Console e vá em Call Resource. Desça a tela até Response Body e pegue o código que aparece depois de token, que será algo como "Bearer yy...". Copie esse token, ele será necessário para executar os comandos no R.
+
+## Setando URL
+
+A Url vai estimar o tipo de consultas que queremos ter. Para mais informações sobre o que é cada uma das consultas, acesse a documentação da API em https://tadepe.docs.apiary.io/ .
+
+A URL é o tipo de consulta que queremos fazer:
+
+
+```python
+import requests
+import json
+import pandas as pd
+from pandas.io.json import json_normalize
+```
+
+
+```python
+# Obter obras:
+obter_obras = 'http://tadepe.transparencia.org.br/api/projects/content?page='
+
+# Obter contatos:
+obter_contatos = 'http://tadepe.transparencia.org.br/api/contacts/content?page='
+
+# Obter alertas:
+obter_alertas = 'http://tadepe.transparencia.org.br/api/inspections/content?page='
+
+# Obter evidências:
+obter_evidencias = 'http://tadepe.transparencia.org.br/api/evidences/content?page='
+
+# Obter instituições:
+obter_instituicoes = 'http://tadepe.transparencia.org.br/api/institutions/content?page='
+
+# Obter mensagens:
+obter_mensagens = 'http://tadepe.transparencia.org.br/api/messages/content?page='
+
+# Obter respostas:
+obter_respostas = 'http://tadepe.transparencia.org.br/api/answers/content?page='
+```
+
+## Função para obter todas as respostas de uma requisição:
+
+
+```python
+def fetch_api(url, token, pg = 1):
+    nextpage = True
+    headers = {"Authorization": token}
+    a = list()
+    while nextpage:
+        base_url = url + str(pg)
+        r = requests.get(base_url, headers=headers).json()
+        b = r.get('data')
+        a = a + b
+        nextpage = r.get('links').get('next')
+        pg = pg + 1
+    
+    return a
+```
+
+Exemplo de uso:
+
+
+```python
+token = 'token obtido'
+
+lista_result = fetch_api(url = obter_alertas, token = token)
+```
+
+## Transformando a lista resultante em um dataframe:
+
+
+```python
+def result_to_df(lista):
+    c = lista[1]['attributes'].keys()
+    df_int = pd.DataFrame(columns = column_names)
+    for elemento in range(1,len(lista)):
+        x = lista[elemento]['attributes']
+        x = pd.DataFrame(x, index=[0])
+        df_int = df_int.append(x)
+    return df_int
+```
+
+Exemplo de uso:
+
+
+```python
+df = result_to_df(lista = lista_result)
+```

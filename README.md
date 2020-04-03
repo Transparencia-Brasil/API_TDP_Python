@@ -82,7 +82,7 @@ lista_result = fetch_api(url = obter_alertas, token = token, pg=30)
 ```python
 def result_to_df(lista):
     c = lista[1]['attributes'].keys()
-    df_int = pd.DataFrame(columns = column_names)
+    df_int = pd.DataFrame(columns = c)
     for elemento in range(1,len(lista)):
         x = lista[elemento]['attributes']
         x = pd.DataFrame(x, index=[0])

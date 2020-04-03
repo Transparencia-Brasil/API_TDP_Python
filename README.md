@@ -1,5 +1,5 @@
 
-# Funções para consultas automáticas da API do Prjeto Tá de Pé em Python
+# Funções para consultas automáticas da API do Projeto Tá de Pé em Python
 
 A seguir, apresento funções para a consulta da API do Tá de Pé e para armazenar os dados em um dataframe.
 

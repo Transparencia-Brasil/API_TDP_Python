@@ -96,3 +96,41 @@ Exemplo de uso:
 ```python
 df = result_to_df(lista = lista_result)
 ```
+
+## Alertas válidos e com problemas
+
+No app "Tá de Pé" são enviados muitos alertas por cidadãos que na realidade estão apenas realizando testes, e não são fotos de obras. Além disso, recebemos dois tipos de alertas: aqueles que precisam de verificação de um engenheiro para atestar o atraso e os que não precisam, pois já possuem atraso em relação à data de entrega ou possuem outras incongruências (ausência de placa, endereço incorreto, etc.)
+
+Para simplificar o processo de leitura dos dados, utilize a função abaixo para obter um dataframe apenas com os alertas válidos, já descartando aqueles que foram rejeitados (não possuiam atraso) ou descartados (não se tratava de um alerta verdadeiro):
+
+```python
+def alertas_validos(df):
+    df['valid'] = np.where((~df['status-incongruity'].isna()) |
+                           ((df['status'] != 'discarded')  & 
+                            (df['status'] != 'rejected')), 1, 0)
+    df['type-alert'] = np.where((~df['status-incongruity'].isna()), 'incongruity_based', 'delay_based')
+    df['status-incongruity'] = df['status-incongruity'].str.replace("incongruity_", "", regex = False) 
+    df['status2'] = np.where((~df['status-incongruity'].isna()), 
+                             df['status-incongruity'], df['status'])
+    df[['created-at','updated-at']] = df[['created-at','updated-at']].apply(pd.to_datetime, format="%Y-%m-%d %H:%M:%S")
+    df = (df.query('valid == 1')
+            .query('status2 != "pending"')
+            .drop(columns= ['status', 'status-incongruity', 'valid'])
+            .rename(columns={'status2' : 'status'}))
+    
+    return df
+```
+
+Exemplo:
+
+```python
+#Obtendo a lista dos alertas
+lista_result = fetch_api(url = obter_alertas, token = token)
+
+#Transformando alertas em df
+df = result_to_df(lista = lista_result)
+
+#Guardando apenas aqueles que já foram validados
+alertas_final = alertas_validos(df = df)
+
+```

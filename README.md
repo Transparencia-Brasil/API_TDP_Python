@@ -87,7 +87,7 @@ def result_to_df(lista):
         y = lista_result[elemento]['id']
         x = lista[elemento]['attributes']
         x = pd.DataFrame(x, index=[0])
-        x['inspection_id'] = y
+        x['id'] = y
         df_int = df_int.append(x)
     return df_int
 ```

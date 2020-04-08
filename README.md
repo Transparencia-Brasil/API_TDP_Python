@@ -83,9 +83,11 @@ lista_result = fetch_api(url = obter_alertas, token = token, pg=30)
 def result_to_df(lista):
     c = lista[1]['attributes'].keys()
     df_int = pd.DataFrame(columns = c)
-    for elemento in range(1,len(lista)):
+    for elemento in range(0,len(lista)):
+        y = lista_result[elemento]['id']
         x = lista[elemento]['attributes']
         x = pd.DataFrame(x, index=[0])
+        x['inspection_id'] = y
         df_int = df_int.append(x)
     return df_int
 ```

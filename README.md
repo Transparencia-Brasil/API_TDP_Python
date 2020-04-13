@@ -24,6 +24,9 @@ from pandas.io.json import json_normalize
 # Obter obras:
 obter_obras = 'http://tadepe.transparencia.org.br/api/projects/content?page='
 
+#Obter apenas as obras visíveis no app:
+obter_obras_vis = 'http://tadepe.transparencia.org.br/api/projects/content?visible_on_app=1&page='
+
 # Obter contatos:
 obter_contatos = 'http://tadepe.transparencia.org.br/api/contacts/content?page='
 
